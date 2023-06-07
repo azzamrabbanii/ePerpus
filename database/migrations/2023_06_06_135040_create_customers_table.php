@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('id_status')->unsigned();
+            //definisikan column id_status
+            $table->foreign('id_status')
+            //referesi column dari table indukan / master
+            ->references('id')
+            //referensi table yang akan di relasikan
+            ->on('status')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
             $table->String('nama_peminjam');
             $table->String('nama_buku');
             $table->dateTime('tanggal_pinjam');

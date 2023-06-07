@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CustomersResource\Pages;
 use App\Filament\Resources\CustomersResource\RelationManagers;
 use App\Models\Customer;
+use App\Models\Status;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Forms\Components\TextInput;
@@ -12,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,7 +31,11 @@ class CustomersResource extends Resource
             ->schema([
                 TextInput::make('nama_peminjam'),
                 TextInput::make('nama_buku'),
-                DateTimePicker::make('tanggal_pinjam')
+                DateTimePicker::make('tanggal_pinjam'),
+                Select::make('id_status')
+                    ->options(function (callable $get) {
+                        return Status::all()->pluck('status', 'id')->toArray();
+                    })
             ]);
     }
 
@@ -38,7 +45,17 @@ class CustomersResource extends Resource
             ->columns([
                 TextColumn::make('nama_peminjam'),
                 TextColumn::make('nama_buku'),
-                TextColumn::make('tanggal_pinjam')
+                TextColumn::make('tanggal_pinjam'),
+                BadgeColumn::make('id_status')
+                ->colors([
+                    'primary',
+                    'warning' => '1',
+                    'danger' => '2',
+                ])
+                ->enum([
+                    '1' => 'Belum Dikembalikan',
+                    '2' => 'Sudah Dikembalikan',
+                ])
             ])
             ->filters([
                 //
