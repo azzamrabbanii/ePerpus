@@ -23,7 +23,7 @@ class CustomersResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -35,7 +35,7 @@ class CustomersResource extends Resource
                 Select::make('id_status')
                     ->options(function (callable $get) {
                         return Status::all()->pluck('status', 'id')->toArray();
-                    })
+                    })->required()
             ]);
     }
 
