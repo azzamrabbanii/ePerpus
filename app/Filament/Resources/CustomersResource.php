@@ -46,16 +46,14 @@ class CustomersResource extends Resource
                 TextColumn::make('nama_peminjam'),
                 TextColumn::make('nama_buku'),
                 TextColumn::make('tanggal_pinjam'),
-                BadgeColumn::make('id_status')
-                ->colors([
-                    'primary',
-                    'warning' => '1',
-                    'danger' => '2',
-                ])
-                ->enum([
-                    '1' => 'Belum Dikembalikan',
-                    '2' => 'Sudah Dikembalikan',
-                ])
+                BadgeColumn::make('status.status')
+                     ->color(static function ($state): string {
+                        if ($state == 'Belum Dikembalikan') {
+                            return 'warning';
+                        }
+                
+                        return 'success';
+                    })
             ])
             ->filters([
                 //

@@ -13,6 +13,6 @@ class Customer extends Model
     protected $guarded = [];
 
     public function status() {
-        return $this->hasOne(Status::class, 'id_status', 'id');
+        return $this->hasOne(Status::class, 'id', 'id_status');
     }
 }
