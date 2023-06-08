@@ -13,13 +13,13 @@ class status_seeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('status')->insert(
+        DB::table('status')->insert([
             [
                 'status' => 'Belum Dikembalikan'
             ],
             [
                 'status' => 'Sudah Dikembalikan'
             ]
-    );
+    ]);
     }
 }
