@@ -33,6 +33,7 @@ class CustomersResource extends Resource
                 TextInput::make('nama_buku'),
                 DateTimePicker::make('tanggal_pinjam'),
                 Select::make('id_status')
+                    ->label('Status Buku')
                     ->options(function (callable $get) {
                         return Status::all()->pluck('status', 'id')->toArray();
                     })->required()

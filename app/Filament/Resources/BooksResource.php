@@ -33,6 +33,7 @@ class BooksResource extends Resource
                 TextInput::make('penerbit_buku'),
                 DatePicker::make('tanggal_rilis'),
                 Select::make('id_kategori')
+                    ->label('Kategori Buku')
                     ->options(function (callable $get) {
                         return Category::all()->pluck('nama_kategori', 'id')->toArray();
                     })->required()

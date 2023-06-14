@@ -6,6 +6,7 @@ use App\Filament\Resources\ChargeResource\Pages;
 use App\Filament\Resources\ChargeResource\RelationManagers;
 use Filament\Tables\Columns\TextColumn;
 use App\Models\Charge;
+use App\Models\Customer;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
@@ -26,10 +27,10 @@ class ChargeResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('id_customers')
-                    ->options(function (callable $get) {
-                        return Customer::all()->pluck('customer', 'id')->toArray();
-                    })->required(),
+                Select::make('id_customers')
+                    ->label('Nama Customers')
+                    ->options(Customer::all()->pluck('nama_peminjam', 'id'))
+                    ->searchable()->required(),
                 TextInput::make('harga_denda')
                     ->numeric(),
                 TextInput::make('status_buku'),
@@ -41,7 +42,7 @@ class ChargeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id_customers'),
+                TextColumn::make('customer.nama_peminjam'),
                 TextColumn::make('harga_denda'),
                 TextColumn::make('status_buku'),
                 TextColumn::make('status_denda')
